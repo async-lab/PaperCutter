@@ -1,0 +1,19 @@
+name: PaperCutter
+version: '${plugin_version}'
+main: ${plugin_group}.PaperCutter
+api-version: '1.20'
+load: STARTUP
+authors: [ ${ plugin_authors } ]
+description: ${plugin_description}
+commands:
+  PaperCutter:
+    description: "Manager Command"
+  TestCommand:
+    description: "Test Command"
+#permissions:
+#  ${plugin_group}.reload:
+#    description: "/dt reload"
+#    default: op
+#  ${plugin_group}.clear:
+#    description: "/dt clear"
+#    default: op
