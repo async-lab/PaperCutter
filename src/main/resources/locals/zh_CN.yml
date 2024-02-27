@@ -1,0 +1,19 @@
+command:
+  without_permission: "[PaperCutter] §c你没有权限!"
+  wrong_usage: "[PaperCutter] 命令好像输错了! 请输入 /papercutter help 了解所有命令"
+  reload:
+    reloaded: "[PaperCutter] 插件已重置"
+  help: |
+    [PaperCutter] 你可能需要这个……
+
+debug:
+  loaded: "[PaperCutter] 插件已加载"
+  disabled: "[PaperCutter] 插件已卸载"
+  config_error: "[PaperCutter] 配置文件错误,卸载插件..."
+
+
+api_default:
+  without_permission: "[PaperCutter API] §c你没有权限!"
+  wrong_usage: "[PaperCutter API] 命令好像输错了!"
+  help: "[PaperCutter API] 你可能需要这个……API……"
+  default: "[PaperCutter API] 这是一条默认信息"
