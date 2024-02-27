@@ -1,35 +1,59 @@
 package club.asyncraft.papercutter;
 
 import club.asyncraft.papercutter.api.executor.CutterExecutor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import club.asyncraft.papercutter.api.i18n.TranslatableContext;
+import club.asyncraft.papercutter.util.Reference;
+import lombok.extern.java.Log;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
 
+@Log
 public class PaperCutter extends JavaPlugin {
 
     public static PaperCutter instance;
+
+    public static TranslatableContext translatableContext;
 
     public static CutterExecutor executor;
 
     @Override
     public void onEnable() {
-        PaperCutter.instance = this;
-        PaperCutter.executor = new MainExecutor();
-        Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setExecutor(executor);
+        try {
+            PaperCutter.instance = this;
+
+            this.initConfig();
+
+            PaperCutter.executor = new MainExecutor();
+            Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setExecutor(executor);
+            Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setTabCompleter(executor);
+
+            this.getLogger().info(PaperCutter.translatableContext.translate("debug.loaded"));
+        } catch (Exception e) {
+            PaperCutter.disable();
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return executor.onCommand(sender, command, label, args);
+    public void onDisable() {
+        this.getLogger().info(PaperCutter.translatableContext.translate("debug.disabled"));
     }
 
-    @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        return executor.onTabComplete(sender, command, alias, args);
+
+    public void initConfig() throws Exception {
+        this.getConfig().options().copyDefaults(true);
+        this.saveDefaultConfig();
+        this.reloadConfig();
+
+        //检查config中配置的lang是否存在
+        String langConfig = this.getConfig().getString("lang");
+
+        //初始化i18n
+        translatableContext = new TranslatableContext(this, Reference.plugin_langs, langConfig);
+    }
+
+    public static void disable() {
+        PaperCutter.instance.getServer().getPluginManager().disablePlugin(PaperCutter.instance);
     }
 }
