@@ -40,15 +40,11 @@ public class PaperCutter extends JavaPlugin {
         this.getLogger().info(PaperCutter.translatableContext.translate("debug.disabled"));
     }
 
-
     public void initConfig() throws Exception {
         this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
         this.reloadConfig();
-
-        //检查config中配置的lang是否存在
         String langConfig = this.getConfig().getString("lang");
-
         //初始化i18n
         translatableContext = new TranslatableContext(this, Reference.plugin_langs, langConfig);
     }
