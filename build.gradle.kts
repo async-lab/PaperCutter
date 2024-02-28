@@ -96,7 +96,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/Async-Lab/maven")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                password = System.getenv("MAVEN_TOKEN")
             }
         }
     }
