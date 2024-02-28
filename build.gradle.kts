@@ -1,15 +1,18 @@
 val pluginName: String by project
+val pluginId: String by project
 val pluginGroup: String by project
 val pluginLicense: String by project
 val pluginVersion: String by project
 val pluginAuthors: String by project
 val pluginDescription: String by project
+val pluginRepository: String by project
 val minecraftVersion: String by project
 
 plugins {
     java
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "2.2.0"
+    id("maven-publish")
 }
 
 group = pluginGroup
@@ -37,8 +40,8 @@ repositories {
 
 dependencies {
     implementation("org.projectlombok:lombok:1.18.20")
-    compileOnly ("org.projectlombok:lombok:1.18.20")
-    annotationProcessor ("org.projectlombok:lombok:1.18.20")
+    compileOnly("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 }
@@ -83,5 +86,35 @@ tasks {
 //            url("https://repo.extendedclip.com/content/repositories/placeholderapi/me/clip/placeholderapi/2.11.5/placeholderapi-2.11.5.jar")
         }
         minecraftVersion(minecraftVersion)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Async-Lab/maven")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            artifact(tasks.shadowJar)
+            artifactId = pluginId
+            pom {
+                name.set(pluginName)
+                description.set(pluginDescription)
+                url.set(pluginRepository)
+                licenses {
+                    license {
+                        name.set(pluginLicense)
+                        url.set(pluginRepository)
+                    }
+                }
+            }
+        }
     }
 }
