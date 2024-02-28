@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  release:
+  publish:
     concurrency:
       group: publish
       cancel-in-progress: true
