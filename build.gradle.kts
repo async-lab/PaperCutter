@@ -93,10 +93,10 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Async-Lab/maven")
+            url = uri("https://maven.pkg.github.com/Async-Lab/PaperCutter")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("MAVEN_TOKEN")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
