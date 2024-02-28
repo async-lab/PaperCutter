@@ -1,5 +1,6 @@
 package club.asyncraft.papercutter.api.executor;
 
+import club.asyncraft.papercutter.MainExecutor;
 import club.asyncraft.papercutter.PaperCutter;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>包装的Executor</p>
+ * <p>使用方法为继承这个类，然后向rootSection添加元素</p>
+ * <p>可以参考{@link MainExecutor}的使用方法</p>
+ */
 @Getter
 @Setter
 public abstract class CutterExecutor implements TabExecutor {
