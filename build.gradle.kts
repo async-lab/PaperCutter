@@ -102,7 +102,7 @@ publishing {
     }
     publications {
         create<MavenPublication>("maven") {
-            artifact(tasks.shadowJar)
+            from(components["java"])
             artifactId = pluginId
             pom {
                 name.set(pluginName)
