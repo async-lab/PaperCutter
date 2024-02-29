@@ -40,10 +40,6 @@ public abstract class CutterExecutor implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         CutterExecutorSection section = rootSection;
 
-        if (args.length == 0) {
-            sender.sendMessage(section.getUsage(PaperCutter.translatableContext.translate("api_default.help")));
-        }
-
         for (String string : args) {
             String arg = string.toLowerCase();
             CutterExecutorSection childSection = section.getChildren().stream()
@@ -58,8 +54,11 @@ public abstract class CutterExecutor implements TabExecutor {
             section = childSection;
         }
 
-        if (section.getRunner() != null) {
-            return section.getRunner().run(sender, command, label, args);
+        Permission permission = Bukkit.getServer().getPluginManager().getPermission(section.getPermissionName());
+        if (permission != null && !sender.hasPermission(permission)) {
+            sender.sendMessage(PaperCutter.translatableContext.translate("api_default.without_permission"));
+        } else if (section.getRunner() != null) {
+            section.getRunner().run(sender, command, label, args);
         }
 
         return true;

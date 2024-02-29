@@ -27,7 +27,6 @@ public class PaperCutter extends JavaPlugin {
             PaperCutter.executor = new MainExecutor();
             Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setExecutor(executor);
             Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setTabCompleter(executor);
-
             this.getLogger().info(PaperCutter.translatableContext.translate("debug.loaded"));
         } catch (Exception e) {
             PaperCutter.disable();

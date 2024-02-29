@@ -1,5 +1,6 @@
 package club.asyncraft.papercutter.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Reference {
@@ -8,7 +9,5 @@ public class Reference {
 
     public static String plugin_group = "club.asyncraft.papercutter";
 
-    public static List<String> plugin_langs = List.of(
-            "zh_CN"
-    );
+    public static List<String> plugin_langs = Arrays.asList("zh_CN");
 }
