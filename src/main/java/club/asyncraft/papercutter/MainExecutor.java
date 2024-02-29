@@ -25,9 +25,10 @@ public class MainExecutor extends CutterExecutor {
                                 }),
                         new CutterExecutorSection("player")
                                 .setRunner((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.player.usage")))
-                                .addChildrenSuppliers(() -> Bukkit.getOnlinePlayers().stream().map(player -> new CutterExecutorSection(player.getName())
-                                                .setRunner((sender, command, label, args) -> sender.sendMessage(player.getName())))
-                                        .collect(Collectors.toList()))
+                                .addChildrenSuppliers(
+                                        (sender, command, alias, args) -> Bukkit.getOnlinePlayers().stream().map(player -> new CutterExecutorSection(player.getName())
+                                                        .setRunner((sender1, command1, label1, args1) -> sender1.sendMessage(player.getName())))
+                                                .collect(Collectors.toList()))
                 );
     }
 }

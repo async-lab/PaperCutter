@@ -23,6 +23,11 @@ public class CutterExecutorSection {
         void run(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
     }
 
+    @FunctionalInterface
+    public interface ChildrenSupplier {
+        List<CutterExecutorSection> get(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args);
+    }
+
     private String sectionName;
 
     @NotNull
@@ -34,7 +39,7 @@ public class CutterExecutorSection {
 
     private List<CutterExecutorSection> staticChildren;
 
-    private List<Supplier<List<CutterExecutorSection>>> childrenSuppliers;
+    private List<ChildrenSupplier> childrenSuppliers;
 
     public CutterExecutorSection(String sectionName) {
         this.sectionName = sectionName;
@@ -45,9 +50,9 @@ public class CutterExecutorSection {
         this.usageSupplier = null;
     }
 
-    public List<CutterExecutorSection> getChildren() {
+    public List<CutterExecutorSection> getChildren(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         List<CutterExecutorSection> children = new ArrayList<>(this.staticChildren);
-        children.addAll(this.childrenSuppliers.stream().map(Supplier::get).flatMap(List::stream).collect(Collectors.toList()));
+        children.addAll(this.childrenSuppliers.stream().map(childrenSupplier -> childrenSupplier.get(sender, command, alias, args)).flatMap(List::stream).collect(Collectors.toList()));
         return children;
     }
 
@@ -63,7 +68,7 @@ public class CutterExecutorSection {
         return this;
     }
 
-    public CutterExecutorSection addChildrenSuppliers(Supplier<List<CutterExecutorSection>> childrenSupplier) {
+    public CutterExecutorSection addChildrenSuppliers(ChildrenSupplier childrenSupplier) {
         this.childrenSuppliers.add(childrenSupplier);
         return this;
     }
