@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class CutterExecutorSection {
 
     @FunctionalInterface
-    public interface SectionRunner {
+    public interface SectionHandler {
         void run(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
     }
 
@@ -35,7 +35,7 @@ public class CutterExecutorSection {
 
     private Supplier<String> usageSupplier;
 
-    private SectionRunner runner;
+    private SectionHandler handler;
 
     private List<CutterExecutorSection> staticChildren;
 
