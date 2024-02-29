@@ -11,11 +11,11 @@ public class MainExecutor extends CutterExecutor {
     public MainExecutor() {
         super(Reference.plugin_id);
         this.getRootSection()
-                .setRunner((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.help")))
+                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.help")))
                 .addStaticChildren(
                         new CutterExecutorSection("reload")
                                 .setPermissionName(Reference.plugin_group + ".reload")
-                                .setRunner((sender, command, label, args) -> {
+                                .setHandler((sender, command, label, args) -> {
                                     try {
                                         PaperCutter.instance.initConfig();
                                     } catch (Exception e) {
@@ -24,10 +24,10 @@ public class MainExecutor extends CutterExecutor {
                                     }
                                 }),
                         new CutterExecutorSection("player")
-                                .setRunner((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.player.usage")))
+                                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.player.usage")))
                                 .addChildrenSuppliers(
                                         (sender, command, alias, args) -> Bukkit.getOnlinePlayers().stream().map(player -> new CutterExecutorSection(player.getName())
-                                                        .setRunner((sender1, command1, label1, args1) -> sender1.sendMessage(player.getName())))
+                                                        .setHandler((sender1, command1, label1, args1) -> sender1.sendMessage(player.getName())))
                                                 .collect(Collectors.toList()))
                 );
     }

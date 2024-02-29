@@ -62,8 +62,8 @@ public abstract class CutterExecutor implements TabExecutor {
         Permission permission = Bukkit.getServer().getPluginManager().getPermission(section.getPermissionName());
         if (permission != null && !sender.hasPermission(permission)) {
             sender.sendMessage(PaperCutter.translatableContext.translate("api_default.without_permission"));
-        } else if (section.getRunner() != null) {
-            section.getRunner().run(sender, command, label, args);
+        } else if (section.getHandler() != null) {
+            section.getHandler().run(sender, command, label, args);
         }
 
         return true;
