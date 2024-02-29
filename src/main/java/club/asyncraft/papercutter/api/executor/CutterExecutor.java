@@ -42,6 +42,11 @@ public abstract class CutterExecutor implements TabExecutor {
 
         for (String string : args) {
             String arg = string.toLowerCase();
+            Permission permission = Bukkit.getServer().getPluginManager().getPermission(section.getPermissionName());
+            if (permission != null && !sender.hasPermission(permission)) {
+                sender.sendMessage(section.getUsage(PaperCutter.translatableContext.translate("api_default.without_permission")));
+                return true;
+            }
             CutterExecutorSection childSection = section.getChildren().stream()
                     .filter(s -> s.getSectionName().equalsIgnoreCase(arg))
                     .findFirst().orElse(null);

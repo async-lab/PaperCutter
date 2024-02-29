@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class MainExecutor extends CutterExecutor {
     public MainExecutor() {
-        super("papercutter");
+        super(Reference.plugin_id);
         this.getRootSection()
                 .setRunner((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.help")))
                 .addStaticChildren(

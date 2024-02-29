@@ -9,6 +9,6 @@ repositories {
     }
 }
 dependencies {
-    compileOnly("com.github.Async-Lab:PaperCutter:nightly")
+    compileOnly("com.github.Async-Lab:PaperCutter:main-SNAPSHOT")
 }
 ```
