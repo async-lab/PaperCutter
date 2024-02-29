@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <p>命令的一个部分</p>
+ * <p>当name为null时表示这个部分是一个任意参数</p>
+ */
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -28,7 +32,7 @@ public class CutterExecutorSection {
         List<CutterExecutorSection> get(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args);
     }
 
-    private String sectionName;
+    private String name;
 
     @NotNull
     private String permissionName;
@@ -41,8 +45,8 @@ public class CutterExecutorSection {
 
     private List<ChildrenSupplier> childrenSuppliers;
 
-    public CutterExecutorSection(String sectionName) {
-        this.sectionName = sectionName;
+    public CutterExecutorSection(String name) {
+        this.name = name;
         this.staticChildren = new ArrayList<>();
         this.childrenSuppliers = new ArrayList<>();
 
