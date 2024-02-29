@@ -18,6 +18,7 @@ public class MainExecutor extends CutterExecutor {
                                 .setHandler((sender, command, label, args) -> {
                                     try {
                                         PaperCutter.instance.initConfig();
+                                        sender.sendMessage(PaperCutter.translatableContext.translate("command.reload.reloaded"));
                                     } catch (Exception e) {
                                         PaperCutter.instance.getLogger().severe(e.toString());
                                         PaperCutter.disable();
