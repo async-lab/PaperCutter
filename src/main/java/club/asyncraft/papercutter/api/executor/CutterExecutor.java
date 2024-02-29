@@ -47,7 +47,7 @@ public abstract class CutterExecutor implements TabExecutor {
                 sender.sendMessage(section.getUsage(PaperCutter.translatableContext.translate("api_default.without_permission")));
                 return true;
             }
-            CutterExecutorSection childSection = section.getChildren().stream()
+            CutterExecutorSection childSection = section.getChildren(sender, command, label, args).stream()
                     .filter(s -> s.getSectionName().equalsIgnoreCase(arg))
                     .findFirst().orElse(null);
 
@@ -72,7 +72,7 @@ public abstract class CutterExecutor implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         List<String> hint = new ArrayList<>();
-        List<CutterExecutorSection> children = rootSection.getChildren();
+        List<CutterExecutorSection> children = rootSection.getChildren(sender, command, alias, args);
 
         for (int i = 0; i < args.length - 1; i++) {
             String arg = args[i].toLowerCase();
@@ -87,7 +87,7 @@ public abstract class CutterExecutor implements TabExecutor {
                 break;
             }
 
-            children = section.getChildren();
+            children = section.getChildren(sender, command, alias, args);
         }
 
         children.stream()
