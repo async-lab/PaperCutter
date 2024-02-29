@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class CutterExecutorSection {
 
     @FunctionalInterface
     public interface SectionRunner {
-        boolean run(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
+        void run(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args);
     }
 
     private String sectionName;
@@ -46,12 +47,19 @@ public class CutterExecutorSection {
 
     public List<CutterExecutorSection> getChildren() {
         List<CutterExecutorSection> children = new ArrayList<>(this.staticChildren);
-        children.addAll(this.childrenSuppliers.stream().map(Supplier::get).flatMap(List::stream).toList());
+        children.addAll(this.childrenSuppliers.stream().map(Supplier::get).flatMap(List::stream).collect(Collectors.toList()));
         return children;
     }
 
-    public CutterExecutorSection addStaticChildren(CutterExecutorSection section) {
+    public CutterExecutorSection addStaticChild(CutterExecutorSection section) {
         this.staticChildren.add(section);
+        return this;
+    }
+
+    public CutterExecutorSection addStaticChildren(CutterExecutorSection... sections) {
+        for (CutterExecutorSection section : sections) {
+            this.addStaticChild(section);
+        }
         return this;
     }
 
@@ -64,7 +72,7 @@ public class CutterExecutorSection {
         if (this.usageSupplier == null) {
             return PaperCutter.translatableContext.translate("api_default.default");
         }
-        
+
         return this.usageSupplier.get();
     }
 
