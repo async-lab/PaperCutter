@@ -48,7 +48,7 @@ public abstract class CutterExecutor implements TabExecutor {
                 return true;
             }
             CutterExecutorSection childSection = section.getChildren(sender, command, label, args).stream()
-                    .filter(s -> s.getSectionName().equalsIgnoreCase(arg))
+                    .filter(s -> s.getName() == null || s.getName().equalsIgnoreCase(arg))
                     .findFirst().orElse(null);
 
             if (childSection == null) {
@@ -79,7 +79,7 @@ public abstract class CutterExecutor implements TabExecutor {
             CutterExecutorSection section = children.stream()
                     .filter(s -> {
                         Permission permission = Bukkit.getServer().getPluginManager().getPermission(s.getPermissionName());
-                        return (permission == null || sender.hasPermission(permission)) && s.getSectionName().equalsIgnoreCase(arg);
+                        return (permission == null || sender.hasPermission(permission)) && (s.getName() == null || s.getName().equalsIgnoreCase(arg));
                     })
                     .findFirst().orElse(null);
 
@@ -93,9 +93,9 @@ public abstract class CutterExecutor implements TabExecutor {
         children.stream()
                 .filter(s -> {
                     Permission permission = Bukkit.getServer().getPluginManager().getPermission(s.getPermissionName());
-                    return (permission == null || sender.hasPermission(permission)) && s.getSectionName().toLowerCase().startsWith(args[args.length - 1].toLowerCase());
+                    return (permission == null || sender.hasPermission(permission)) && s.getName().toLowerCase().startsWith(args[args.length - 1].toLowerCase());
                 })
-                .map(CutterExecutorSection::getSectionName)
+                .map(CutterExecutorSection::getName)
                 .forEach(hint::add);
 
         return hint;
