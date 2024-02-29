@@ -86,32 +86,22 @@ tasks {
     }
 }
 
-//publishing {
-//    repositories {
-//        maven {
-//            name = "GitHubPackages"
-//            url = uri("https://maven.pkg.github.com/Async-Lab/PaperCutter")
-//            credentials {
-//                username = System.getenv("GITHUB_ACTOR")
-//                password = System.getenv("GITHUB_TOKEN")
-//            }
-//        }
-//    }
-//    publications {
-//        create<MavenPublication>("maven") {
-//            from(components["java"])
-//            artifactId = pluginId
-//            pom {
-//                name.set(pluginName)
-//                description.set(pluginDescription)
-//                url.set(pluginRepository)
-//                licenses {
-//                    license {
-//                        name.set(pluginLicense)
-//                        url.set(pluginRepository)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifactId = pluginId
+            pom {
+                name.set(pluginName)
+                description.set(pluginDescription)
+                url.set(pluginRepository)
+                licenses {
+                    license {
+                        name.set(pluginLicense)
+                        url.set(pluginRepository)
+                    }
+                }
+            }
+        }
+    }
+}
