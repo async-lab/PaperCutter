@@ -1,7 +1,7 @@
 name: '${plugin_name}'
 version: '${plugin_version}'
 main: ${plugin_group}.PaperCutter
-api-version: '1.20'
+api-version: '1.13'
 load: STARTUP
 authors: [ ${ plugin_authors } ]
 description: ${plugin_description}
