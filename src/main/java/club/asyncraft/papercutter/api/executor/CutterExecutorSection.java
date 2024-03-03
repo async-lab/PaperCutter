@@ -79,7 +79,7 @@ public class CutterExecutorSection {
 
     public String getUsage() {
         if (this.usageSupplier == null) {
-            return PaperCutter.translatableContext.translate("api_default.default");
+            return PaperCutter.getInstance().getTranslatableContext().translate("api_default.default");
         }
 
         return this.usageSupplier.get();

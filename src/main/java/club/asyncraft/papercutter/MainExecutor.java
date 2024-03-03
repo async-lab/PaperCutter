@@ -14,13 +14,13 @@ public class MainExecutor extends CutterExecutor {
     public MainExecutor() {
         super(Reference.plugin_id);
         this.getRootSection()
-                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.help")))
+                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.getInstance().getTranslatableContext().translate("command.help")))
                 .addStaticChildren(
                         new CutterExecutorSection("reload")
                                 .setPermissionName(Reference.plugin_group + ".reload")
                                 .setHandler(this::onReload),
                         new CutterExecutorSection("player")
-                                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.translatableContext.translate("command.player.usage")))
+                                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.getInstance().getTranslatableContext().translate("command.player.usage")))
                                 .addChildrenSuppliers(
                                         (sender, command, alias, args) -> Bukkit.getOnlinePlayers().stream().map(
                                                         player -> new CutterExecutorSection(player.getName())
@@ -32,11 +32,11 @@ public class MainExecutor extends CutterExecutor {
 
     private void onReload(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         try {
-            PaperCutter.instance.initConfig();
+            PaperCutter.getInstance().initConfig();
         } catch (Exception e) {
-            PaperCutter.instance.getLogger().severe(e.toString());
+            PaperCutter.getInstance().getLogger().severe(e.toString());
             PaperCutter.disable();
         }
-        commandSender.sendMessage(PaperCutter.translatableContext.translate("command.reload.reloaded"));
+        commandSender.sendMessage(PaperCutter.getInstance().getTranslatableContext().translate("command.reload.reloaded"));
     }
 }

@@ -44,7 +44,7 @@ public abstract class CutterExecutor implements TabExecutor {
             String arg = string.toLowerCase();
             Permission permission = Bukkit.getServer().getPluginManager().getPermission(section.getPermissionName());
             if (permission != null && !sender.hasPermission(permission)) {
-                sender.sendMessage(section.getUsage(PaperCutter.translatableContext.translate("api_default.without_permission")));
+                sender.sendMessage(section.getUsage(PaperCutter.getInstance().getTranslatableContext().translate("api_default.without_permission")));
                 return true;
             }
             CutterExecutorSection childSection = section.getChildren(sender, command, label, args).stream()
@@ -52,7 +52,7 @@ public abstract class CutterExecutor implements TabExecutor {
                     .findFirst().orElse(null);
 
             if (childSection == null) {
-                sender.sendMessage(section.getUsage(PaperCutter.translatableContext.translate("api_default.wrong_usage")));
+                sender.sendMessage(section.getUsage(PaperCutter.getInstance().getTranslatableContext().translate("api_default.wrong_usage")));
                 return true;
             }
 
@@ -61,7 +61,7 @@ public abstract class CutterExecutor implements TabExecutor {
 
         Permission permission = Bukkit.getServer().getPluginManager().getPermission(section.getPermissionName());
         if (permission != null && !sender.hasPermission(permission)) {
-            sender.sendMessage(PaperCutter.translatableContext.translate("api_default.without_permission"));
+            sender.sendMessage(PaperCutter.getInstance().getTranslatableContext().translate("api_default.without_permission"));
         } else if (section.getHandler() != null) {
             section.getHandler().run(sender, command, label, args);
         }
