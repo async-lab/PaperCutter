@@ -3,19 +3,20 @@ package club.asyncraft.papercutter;
 import club.asyncraft.papercutter.api.executor.CutterExecutor;
 import club.asyncraft.papercutter.api.i18n.TranslatableContext;
 import club.asyncraft.papercutter.util.Reference;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
 @Log
+@Getter
 public class PaperCutter extends JavaPlugin {
 
-    public static PaperCutter instance;
+    @Getter
+    private static PaperCutter instance;
 
-    public static TranslatableContext translatableContext;
-
-    public static CutterExecutor executor;
+    private TranslatableContext translatableContext;
 
     @Override
     public void onEnable() {
@@ -24,10 +25,10 @@ public class PaperCutter extends JavaPlugin {
 
             this.initConfig();
 
-            PaperCutter.executor = new MainExecutor();
+            CutterExecutor executor = new MainExecutor();
             Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setExecutor(executor);
             Objects.requireNonNull(this.getServer().getPluginCommand("PaperCutter")).setTabCompleter(executor);
-            this.getLogger().info(PaperCutter.translatableContext.translate("debug.loaded"));
+            this.getLogger().info(this.translatableContext.translate("debug.loaded"));
         } catch (Exception e) {
             PaperCutter.disable();
             e.printStackTrace();
@@ -36,7 +37,7 @@ public class PaperCutter extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.getLogger().info(PaperCutter.translatableContext.translate("debug.disabled"));
+        this.getLogger().info(this.translatableContext.translate("debug.disabled"));
     }
 
     public void initConfig() throws Exception {
@@ -45,10 +46,11 @@ public class PaperCutter extends JavaPlugin {
         this.reloadConfig();
         String langConfig = this.getConfig().getString("lang");
         //初始化i18n
-        translatableContext = new TranslatableContext(this, Reference.plugin_langs, langConfig);
+        this.translatableContext = new TranslatableContext(this, Reference.plugin_langs, langConfig);
     }
 
     public static void disable() {
         PaperCutter.instance.getServer().getPluginManager().disablePlugin(PaperCutter.instance);
     }
+
 }
