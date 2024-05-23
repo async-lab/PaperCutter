@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>国际化上下文</p>
- * <p>语言文件夹为resources/locals</p>
+ * <p>语言文件夹为resources/locales</p>
  * <p>实例化后使用实例的translate方法，输入完全限定名(类似于command.help)作为参数来获得字符串</p>
  */
 public class TranslatableContext {
@@ -27,13 +27,13 @@ public class TranslatableContext {
     public TranslatableContext(JavaPlugin plugin, List<String> langs, String langConfig) throws Exception {
         //导出所有语言文件
         for (String lang : langs) {
-            String langRelativePath = "locals/" + lang + ".yml";
+            String langRelativePath = "locales/" + lang + ".yml";
             if (!new File(plugin.getDataFolder(), langRelativePath).exists()) {
                 plugin.saveResource(langRelativePath, false);
             }
         }
 
-        String langFilePath = Paths.get(plugin.getDataFolder().getAbsolutePath(), "locals", langConfig + ".yml").toString();
+        String langFilePath = Paths.get(plugin.getDataFolder().getAbsolutePath(), "locales", langConfig + ".yml").toString();
         File langFile = new File(langFilePath);
         if (!langFile.exists()) {
             throw new Exception("Lang file is not found!");

@@ -35,23 +35,20 @@ public class CutterExecutorSection {
     private String name;
 
     @NotNull
-    private String permissionName;
+    private String permissionName = "";
 
-    private Supplier<String> usageSupplier;
+    private Supplier<String> usageSupplier = () -> PaperCutter.getInstance().getTranslatableContext().translate("api_default.default");
 
-    private SectionHandler handler;
+    private SectionHandler handler = (sender, command, label, args) -> sender.sendMessage(this.usageSupplier.get());
 
-    private List<CutterExecutorSection> staticChildren;
+    private CutterExecutorSection parent = null;
 
-    private List<ChildrenSupplier> childrenSuppliers;
+    private List<CutterExecutorSection> staticChildren = new ArrayList<>();
+
+    private List<ChildrenSupplier> childrenSuppliers = new ArrayList<>();
 
     public CutterExecutorSection(String name) {
         this.name = name;
-        this.staticChildren = new ArrayList<>();
-        this.childrenSuppliers = new ArrayList<>();
-
-        this.permissionName = "";
-        this.usageSupplier = null;
     }
 
     public List<CutterExecutorSection> getChildren(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
@@ -74,6 +71,11 @@ public class CutterExecutorSection {
 
     public CutterExecutorSection addChildrenSuppliers(ChildrenSupplier childrenSupplier) {
         this.childrenSuppliers.add(childrenSupplier);
+        return this;
+    }
+
+    public CutterExecutorSection setUsageSupplier(Supplier<String> supplier) {
+        this.usageSupplier = supplier;
         return this;
     }
 

@@ -20,7 +20,7 @@ public class MainExecutor extends CutterExecutor {
                                 .setPermissionName(Reference.plugin_group + ".reload")
                                 .setHandler(this::onReload),
                         new CutterExecutorSection("player")
-                                .setHandler((sender, command, label, args) -> sender.sendMessage(PaperCutter.getInstance().getTranslatableContext().translate("command.player.usage")))
+                                .setUsageSupplier(() -> PaperCutter.getInstance().getTranslatableContext().translate("command.player.usage"))
                                 .addChildrenSuppliers(
                                         (sender, command, alias, args) -> Bukkit.getOnlinePlayers().stream().map(
                                                         player -> new CutterExecutorSection(player.getName())
