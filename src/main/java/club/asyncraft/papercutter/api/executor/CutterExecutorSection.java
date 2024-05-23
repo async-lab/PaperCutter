@@ -32,7 +32,7 @@ public class CutterExecutorSection {
         List<CutterExecutorSection> get(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args);
     }
 
-    private String name;
+    private String name; // name为null表示这个部分是一个任意参数（可接受任何值）
 
     @NotNull
     private String permissionName = "";
@@ -41,14 +41,16 @@ public class CutterExecutorSection {
 
     private SectionHandler handler = (sender, command, label, args) -> sender.sendMessage(this.usageSupplier.get());
 
-    private CutterExecutorSection parent = null;
-
     private List<CutterExecutorSection> staticChildren = new ArrayList<>();
 
     private List<ChildrenSupplier> childrenSuppliers = new ArrayList<>();
 
     public CutterExecutorSection(String name) {
         this.name = name;
+    }
+    
+    public CutterExecutorSection() {
+        this(null);
     }
 
     public List<CutterExecutorSection> getChildren(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
